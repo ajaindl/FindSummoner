@@ -37,8 +37,8 @@ var ManageSummonerPage = React.createClass({
     },
     
     formIsValid: function(){
-        
-        if(this.state.summoner.length>0){
+        console.log(this.state.name);
+        if(this.state.name.length>0){
             return true;
         }
         else{

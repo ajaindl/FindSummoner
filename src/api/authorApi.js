@@ -6,9 +6,9 @@ var summoners = require('./summonerData').summoners;
 var _ = require('lodash');
 var RiotHttp = require('./http');
 
-var key = "?api_key=RGAPI-264061FA-E612-49F0-9849-46539856EBBC";
+var key = "?api_key=RGAPI-90841082-9c08-450b-9e50-8e9b3ebc5144";
 
-var summonerString = "v1.4/summoner/by-name/";
+var summonerString = "summoner/v3/summoners/by-name/";
 
 //This would be performed on the server in a real app. Just stubbing in.
 var _generateId = function(author) {

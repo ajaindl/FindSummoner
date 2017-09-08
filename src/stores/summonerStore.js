@@ -7,7 +7,7 @@ var assign= require('object-assign');
 var _ = require('lodash');
 var CHANGE_EVENT = 'change';
 
-var _summoners = [];
+var _summoners = new Array();
 
 var SummonerStore= assign({}, EventEmitter.prototype, {
    addChangeListener: function (callback) {
@@ -36,7 +36,9 @@ Dispatcher.register(function(action) {
                 SummonerStore.emitChange();
                 break;
          case SummonerTypes.FIND_SUMMONER:
-                _summoners.push(action.summoner);
+           console.log(_summoners);
+           console.log(action.summoner[0]);
+                _summoners=action.summoner[0];
                 SummonerStore.emitChange();
                 break;
 

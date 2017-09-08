@@ -1,7 +1,7 @@
 "use strict";
 var summoners = require('./summonerData').summoners;
 var $ = require("jquery");
-var riotUrl = "https://na.api.riotgames.com/api/lol/NA/";
+var riotUrl = "https://na1.api.riotgames.com/lol/";
 
 
 var RiotHttpRequest = {

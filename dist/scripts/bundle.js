@@ -50312,9 +50312,9 @@ var summoners = require('./summonerData').summoners;
 var _ = require('lodash');
 var RiotHttp = require('./http');
 
-var key = "?api_key=RGAPI-264061FA-E612-49F0-9849-46539856EBBC";
+var key = "?api_key=RGAPI-90841082-9c08-450b-9e50-8e9b3ebc5144";
 
-var summonerString = "v1.4/summoner/by-name/";
+var summonerString = "summoner/v3/summoners/by-name/";
 
 //This would be performed on the server in a real app. Just stubbing in.
 var _generateId = function(author) {
@@ -50396,7 +50396,7 @@ module.exports = {
 "use strict";
 var summoners = require('./summonerData').summoners;
 var $ = require("jquery");
-var riotUrl = "https://na.api.riotgames.com/api/lol/NA/";
+var riotUrl = "https://na1.api.riotgames.com/lol/";
 
 
 var RiotHttpRequest = {
@@ -50798,8 +50798,8 @@ var ManageSummonerPage = React.createClass({displayName: "ManageSummonerPage",
     },
     
     formIsValid: function(){
-        
-        if(this.state.summoner.length>0){
+        console.log(this.state.name);
+        if(this.state.name.length>0){
             return true;
         }
         else{
@@ -51102,7 +51102,7 @@ var assign= require('object-assign');
 var _ = require('lodash');
 var CHANGE_EVENT = 'change';
 
-var _summoners = [];
+var _summoners = new Array();
 
 var SummonerStore= assign({}, EventEmitter.prototype, {
    addChangeListener: function (callback) {
@@ -51131,7 +51131,9 @@ Dispatcher.register(function(action) {
                 SummonerStore.emitChange();
                 break;
          case SummonerTypes.FIND_SUMMONER:
-                _summoners.push(action.summoner);
+           console.log(_summoners);
+           console.log(action.summoner[0]);
+                _summoners=action.summoner[0];
                 SummonerStore.emitChange();
                 break;
 
