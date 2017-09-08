@@ -11,7 +11,6 @@ var Input = React.createClass({
         if(this.props.error && this.props.error.length>0) {
             wrapperClass += " " + 'has-error';
         }
-        debugger;
         return (
         <div className={wrapperClass}>
             <label htmlFor={this.props.name}> {this.props.label} </label>

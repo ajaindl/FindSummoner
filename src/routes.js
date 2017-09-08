@@ -13,7 +13,7 @@ var routes = (
     <Route name="addAuthor" path="author" handler={require('./components/authors/manageAuthorPage')} />
     <Route name="manageAuthor" path="author/:id" handler={require('./components/authors/manageAuthorPage')} />
     <Route name="about" handler={require('./components/about/aboutPage')} />      
-    <Route name="summoner" handler={require('./components/summoner/summonerForm')} />
+    <Route name="summoner" handler={require('./components/summoner/manageSummonerPage')} />
     <Route name="postSummoner" handler={require('./components/summoner/summonerPage')} />
  </Route>
 );

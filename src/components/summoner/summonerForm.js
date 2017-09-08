@@ -1,11 +1,11 @@
 "use strict";
 
 var React = require('react');
-var Input = require('../common/textinput');
+var Input = require('../common/textInput');
 
 var SummonerForm = React.createClass({
     render: function () {
-        debugger;
+        console.log(this.props);
         return (
         <form>
             <h1>Manage Summoner</h1>

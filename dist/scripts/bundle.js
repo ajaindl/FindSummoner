@@ -50339,7 +50339,6 @@ var AuthorApi = {
     },
 	
 	saveAuthor: function(author) {
-        debugger;
 		//pretend an ajax call to web api is made here
 		console.log('Pretend this just saved the author to the DB via AJAX call...');
 		
@@ -50474,6 +50473,7 @@ var Input = require('../common/textInput');
 
 var AuthorForm = React.createClass({displayName: "AuthorForm",
     render: function () {
+        console.log(this.props);
         return (
             React.createElement("form", null, 
                 React.createElement("h1", null, "Manage Author"), 
@@ -50487,7 +50487,7 @@ var AuthorForm = React.createClass({displayName: "AuthorForm",
                     name: "lastName", 
                     label: "Last Name", 
                     value: this.props.author.lastName, 
-                    onChange: this.props.onChange.bind(this), 
+                    onChange: this.props.onChange, 
                     error: this.props.errors.lastName}), 
             
             React.createElement("input", {type: "submit", value: "Save", className: "btn btn-default", onClick: this.props.onSave})
@@ -50641,7 +50641,6 @@ var ManageAuthorPage = React.createClass({displayName: "ManageAuthorPage",
         return formIsValid;
     },
     setAuthorState: function(event) {
-        debugger;
         this.setState({dirty: true});
         var field = event.target.name;
         var value= event.target.value;
@@ -50650,7 +50649,6 @@ var ManageAuthorPage = React.createClass({displayName: "ManageAuthorPage",
     },
     
     saveAuthor: function(event) {
-        debugger;
         event.preventDefault();
         
         if(!this.authorFormIsValid()){
@@ -50668,7 +50666,6 @@ var ManageAuthorPage = React.createClass({displayName: "ManageAuthorPage",
         
     },
     render: function () {
-        debugger;
         return (
             React.createElement(AuthorForm, {
             author: this.state.author, 
@@ -50723,7 +50720,6 @@ var Input = React.createClass({displayName: "Input",
         if(this.props.error && this.props.error.length>0) {
             wrapperClass += " " + 'has-error';
         }
-        debugger;
         return (
         React.createElement("div", {className: wrapperClass}, 
             React.createElement("label", {htmlFor: this.props.name}, " ", this.props.label, " "), 
@@ -50750,42 +50746,6 @@ module.exports= Input;
 
 var React = require('react');
 
-var Input = React.createClass({displayName: "Input",
-    propTypes: {
-        onChange: React.PropTypes.func.isRequired
-    },
-    render: function() {
-        var wrapperClass= 'form-group';
-        if(this.props.error && this.props.error.length>0) {
-            wrapperClass += " " + 'has-error';
-        }
-        debugger;
-        return (
-        React.createElement("div", {className: wrapperClass}, 
-            React.createElement("label", {htmlFor: this.props.name}, " ", this.props.label, " "), 
-            React.createElement("div", {className: "field"}, 
-                React.createElement("input", {type: "text", 
-                name: this.props.name, 
-                className: "form-control", 
-                placeholder: this.props.placeholder, 
-                ref: this.props.name, 
-                value: this.props.value, 
-                onChange: this.props.onChange}), 
-            React.createElement("div", {className: "input"}, this.props.error)
-            )
-            )
-            
-        );
-    }
-});
-
-module.exports= Input;
-
-},{"react":202}],219:[function(require,module,exports){
-"use strict";
-
-var React = require('react');
-
 var Home = React.createClass({displayName: "Home",
    render: function(){
        return (
@@ -50798,15 +50758,93 @@ var Home = React.createClass({displayName: "Home",
 
 module.exports = Home;
 
-},{"react":202}],220:[function(require,module,exports){
+},{"react":202}],219:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
-var Input = require('../common/textinput');
+var Router = require('react-router');
+var SummonerForm = require('./summonerForm');
+var SummonerActions = require('../../actions/summonerActions');
+var SummonerStore = require('../../stores/summonerStore');
+var toastr = require('toastr');
+
+var ManageSummonerPage = React.createClass({displayName: "ManageSummonerPage",
+    mixins: [
+        Router.Navigation
+    ],
+    
+    getInitialState: function(){
+        return {
+            summoners: {},
+            errors: {},
+            dirty:false,
+            name: ''
+        };
+    },
+    
+    componentWillMount: function() {
+      var summonerName=this.props.params.name;
+        
+        if (summonerName) {
+            this.setState({summoner: SummonerStore.getSummoners()});
+        }
+    },
+    setSummonerState: function(event) {
+        this.setState({dirty: true});
+        var field = event.target.name;
+        var value= event.target.value;
+        this.state.name = value;
+        return this.setState({summoner: this.state.summoner});
+    },
+    
+    formIsValid: function(){
+        
+        if(this.state.summoner.length>0){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    },
+    
+    findSummoner: function(event) {
+        event.preventDefault();
+        
+        if(!this.formIsValid()){
+            return;
+        }
+        else    {
+        SummonerActions.FindSummoner(this.state.name);
+        }
+        this.setState({dirty: false});
+        toastr.success('Summoner search.');
+        
+    },
+    render: function () {
+        console.log(this.props);
+        return (
+            React.createElement(SummonerForm, {
+            summoner: this.state.name, 
+            onChange: this.setSummonerState, 
+            onSave: this.findSummoner, 
+            errors: this.state.errors})
+        );
+        console.log(this.props);
+    }
+});
+
+module.exports = ManageSummonerPage;
+
+},{"../../actions/summonerActions":205,"../../stores/summonerStore":230,"./summonerForm":220,"react":202,"react-router":33,"toastr":203}],220:[function(require,module,exports){
+"use strict";
+
+var React = require('react');
+var Input = require('../common/textInput');
 
 var SummonerForm = React.createClass({displayName: "SummonerForm",
     render: function () {
-        debugger;
+        console.log(this.props);
         return (
         React.createElement("form", null, 
             React.createElement("h1", null, "Manage Summoner"), 
@@ -50825,7 +50863,7 @@ var SummonerForm = React.createClass({displayName: "SummonerForm",
 
 module.exports=SummonerForm;
 
-},{"../common/textinput":218,"react":202}],221:[function(require,module,exports){
+},{"../common/textInput":217,"react":202}],221:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -50983,14 +51021,14 @@ React.createElement(Route, {name: "app", path: "/", handler: require('./componen
     React.createElement(Route, {name: "addAuthor", path: "author", handler: require('./components/authors/manageAuthorPage')}), 
     React.createElement(Route, {name: "manageAuthor", path: "author/:id", handler: require('./components/authors/manageAuthorPage')}), 
     React.createElement(Route, {name: "about", handler: require('./components/about/aboutPage')}), 
-    React.createElement(Route, {name: "summoner", handler: require('./components/summoner/summonerForm')}), 
+    React.createElement(Route, {name: "summoner", handler: require('./components/summoner/manageSummonerPage')}), 
     React.createElement(Route, {name: "postSummoner", handler: require('./components/summoner/summonerPage')})
  )
 );
                                  
 module.exports = routes;
 
-},{"./components/about/aboutPage":210,"./components/app":211,"./components/authors/authorPage":214,"./components/authors/manageAuthorPage":215,"./components/homePage":219,"./components/summoner/summonerForm":220,"./components/summoner/summonerPage":222,"react":202,"react-router":33}],229:[function(require,module,exports){
+},{"./components/about/aboutPage":210,"./components/app":211,"./components/authors/authorPage":214,"./components/authors/manageAuthorPage":215,"./components/homePage":218,"./components/summoner/manageSummonerPage":219,"./components/summoner/summonerPage":222,"react":202,"react-router":33}],229:[function(require,module,exports){
 "use strict";
 
 var Dispatcher = require('../dispatcher/appDispatcher');

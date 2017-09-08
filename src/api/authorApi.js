@@ -33,7 +33,6 @@ var AuthorApi = {
     },
 	
 	saveAuthor: function(author) {
-        debugger;
 		//pretend an ajax call to web api is made here
 		console.log('Pretend this just saved the author to the DB via AJAX call...');
 		

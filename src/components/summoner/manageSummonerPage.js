@@ -29,7 +29,6 @@ var ManageSummonerPage = React.createClass({
         }
     },
     setSummonerState: function(event) {
-        debugger;
         this.setState({dirty: true});
         var field = event.target.name;
         var value= event.target.value;
@@ -37,29 +36,36 @@ var ManageSummonerPage = React.createClass({
         return this.setState({summoner: this.state.summoner});
     },
     
+    formIsValid: function(){
+        
+        if(this.state.summoner.length>0){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    },
+    
     findSummoner: function(event) {
-        debugger;
         event.preventDefault();
         
-        if(!this.authorFormIsValid()){
+        if(!this.formIsValid()){
             return;
         }
         else    {
-            debugger;
         SummonerActions.FindSummoner(this.state.name);
         }
-        debugger;
         this.setState({dirty: false});
         toastr.success('Summoner search.');
         
     },
     render: function () {
-        console.log(this.setSummonerState);
-        debugger;
+        console.log(this.props);
         return (
             <SummonerForm 
             summoner={this.state.name}
-            onChange= {this.setSummonerState.bind(this)}
+            onChange= {this.setSummonerState}
             onSave={this.findSummoner} 
             errors={this.state.errors} />
         );

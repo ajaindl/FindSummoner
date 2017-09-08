@@ -51,7 +51,6 @@ var ManageAuthorPage = React.createClass({
         return formIsValid;
     },
     setAuthorState: function(event) {
-        debugger;
         this.setState({dirty: true});
         var field = event.target.name;
         var value= event.target.value;
@@ -60,7 +59,6 @@ var ManageAuthorPage = React.createClass({
     },
     
     saveAuthor: function(event) {
-        debugger;
         event.preventDefault();
         
         if(!this.authorFormIsValid()){
@@ -78,7 +76,6 @@ var ManageAuthorPage = React.createClass({
         
     },
     render: function () {
-        debugger;
         return (
             <AuthorForm 
             author={this.state.author}
